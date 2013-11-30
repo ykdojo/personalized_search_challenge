@@ -1,4 +1,4 @@
-*** Attempt on a Kaggle competition, *Personalized Web Search Challenge* (hosted by Yandex)
+***Attempt on a Kaggle competition, *Personalized Web Search Challenge* (hosted by Yandex)
 URL: http://www.kaggle.com/c/yandex-personalized-web-search-challenge
 
 ** Deadline: Friday, January 10, 2014
