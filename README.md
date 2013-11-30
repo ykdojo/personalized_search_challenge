@@ -3,17 +3,17 @@ URL: http://www.kaggle.com/c/yandex-personalized-web-search-challenge
 
 ## Deadline: Friday, January 10, 2014
 
-## Team Members:
+## Team Members
 - Yosuke Sugishita
 - David Kim
 - (Possibly Brendan and David Hsiao)
 
-## Some ideas on our team name:
+## Ideas on our team name
 - Asian Revolution
 - West Coasters
 - Canadian Kimchi Roll
 
-## File structure:
+## File structure
 - script
   - Contains our scripts.
 - data
@@ -36,10 +36,19 @@ All the code must be reviewed by at least by one other person before being pulle
   - Any other editors you like?
 
 ## Some notes on the data
-*The train file is big (16GB when uncompressed)*
+**The train file is big (16GB when uncompressed)**
+
 So we need to think about how to handle this.  Perhaps use a database, like sqlite or MySQL?
 I (Yosuke) suspect we can try our first strategies with a randomly-sampled subset of the data.  How would we go about it?
 
 ## Note on possible strategies
+I (Yosuke) think there are two ways to look at this problem.
+  1. Collaborative filtering (recommender) problem
+    - Netflix Prize winners' solution: http://www2.research.att.com/~volinsky/papers/ieeecomputer.pdf
+  2. We can also look at the past clicks a certain user has performed.
+    - The user is probably more (or less) likely to click the pages they already clicked and liked. => Need to test this.
+
+#### About data
 In the competition, the first 27 days are used as train data, and the last 3 days as test data. (http://www.kaggle.com/c/yandex-personalized-web-search-challenge/data)
+
 So perhaps we can locally test our model using the first 24 days train and the next 3 days as test.
