@@ -19,6 +19,18 @@ Contains our scripts.
 - data
 Contains all the data, like test and train.  Not committed due to the large size of the files.  Download them directly from Kaggle.
 
+** About branches / pull requests
+All the code must be reviewed by at least by one other person before being pulled into the master.  Make a branch, write code, test, and send a pull request.  Use short, descriptive names for branches.
+*Never* directly work on the master.
+
+** Tools
+* Language(s)
+- Python
+* Editors
+- Vim
+- PyCharm might be good.  The same company's Ruby IDE is awesome.
+- Any other editors you like?
+
 ** Some notes on the data
 - The train file is big (16GB when uncompressed)
 So we need to think about how to handle this.  Perhaps use a database, like sqlite or MySQL?
