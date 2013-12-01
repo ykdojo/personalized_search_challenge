@@ -6,7 +6,8 @@ URL: http://www.kaggle.com/c/yandex-personalized-web-search-challenge
 ## Team Members
 - Yosuke Sugishita
 - David Kim
-- (Possibly Brendan and David Hsiao)
+- Possibly Brendan and David Hsiao
+- Idea: Should we make this open to people in Data Science Club and local data meetups on Meetup.com?  If we have too many people (I think 4-5 people in one team is a limit), we can make multiple teams and still work together.
 
 ## Ideas on our team name
 - Asian Revolution
