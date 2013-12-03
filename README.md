@@ -37,11 +37,14 @@ All the code must be reviewed by at least by one other person before being pulle
   - Any other editors you like?
 
 ## Notes on possible strategies (more on the wiki)
-I (Yosuke) think there are two ways to look at this problem.
+Two ways to look at this problem:
   1. Collaborative filtering (recommender) problem
     - Netflix Prize winners' solution: http://www2.research.att.com/~volinsky/papers/ieeecomputer.pdf
   2. We can also look at the past clicks a certain user has performed.
     - The user is probably more (or less) likely to click the pages they already clicked and liked. => Need to test this.
+
+Our first strategy is based on 2.  (Low-hanging fruits! Yay!)
+https://github.com/yosukesugishita/personalized_search_challenge/wiki/Initial-Model:-Use-multiple-visits
 
 ## Some notes on the data
 #### The train file is big (16GB when uncompressed)
