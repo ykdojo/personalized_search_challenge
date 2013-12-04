@@ -9,6 +9,11 @@
 #  > time python count_lins_in_train.py
 #
 # Question: How about in Windows?
+#
+##===RESULT===
+# The number of lines in the train file was: 164,439,537
+# It took about 1 minute on my 8GB MacBook Pro to run this.
+
 
 
 import os
