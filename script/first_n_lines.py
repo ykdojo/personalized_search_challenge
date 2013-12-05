@@ -1,3 +1,9 @@
+## Oops.
+# I just found out that I could've used the following line in unix:
+# > head -n 1000 train > train_head
+# > tail -n 1000 train > tarin_tail
+
+
 ## Take first n lines from the 16GB train data and write them into a single file caled 'train_head'
 
 # The number of lines to take:

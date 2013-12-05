@@ -1,3 +1,9 @@
+## Oops.
+# I just found out that I could've used the following line in unix:
+# > head -n 1000 train > train_head
+# > tail -n 1000 train > tarin_tail
+
+
 ## Assumption: The user ID goes from 0 to 5,736,332 (there are 5,736,333 unique users).
 # In order to test this, take last n lines from train data and write them into a single file caled 'train_tail'
 #  (I already checked the first several ID's, and the assumption holds)

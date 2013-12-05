@@ -1,3 +1,8 @@
+## Oops.
+# I just found out that I could've used the following line in unix:
+# > time wc -l train
+
+
 ## Count the number of lines in the train file.
 #
 # It's useful for later deveopment, and this file can be
