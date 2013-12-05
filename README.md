@@ -35,6 +35,10 @@ All the code must be reviewed by at least by one other person before being pulle
   - Vim
   - PyCharm might be good.  The same company's Ruby IDE is awesome.
   - Any other editors you like?
+- Database?
+  - Looks like some people on Kaggle tried to use databases, but it didn't work out very well:
+  - http://www.kaggle.com/c/yandex-personalized-web-search-challenge/forums/t/6183/handling-703-000-000-urls/33256#post33256
+  - http://www.kaggle.com/c/yandex-personalized-web-search-challenge/forums/t/6183/handling-703-000-000-urls/33256#post33256
 
 ## Notes on possible strategies (more on the wiki)
 Two ways to look at this problem:
