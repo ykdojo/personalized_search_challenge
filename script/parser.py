@@ -1,3 +1,6 @@
+## This was originally written by a Kaggler and presented on a discussion board:
+# http://www.kaggle.com/c/yandex-personalized-web-search-challenge/forums/t/6489/python-code-for-parsing-data
+
 __author__ = 'Miroslaw Horbal'
 __email__ = 'miroslaw@gmail.com'
 __date__ = 'December 1, 2013'
@@ -15,12 +18,16 @@ def parse_sessions(file):
         { SessionID: int,
           Day: int,
           USERID: int,
-          Query: { TimePassed: int,
+          # This should be a list of queries.
+          Query: [
+                  { TimePassed: int,
                    SERPID: int,
                    QueryID: int,
                    ListOfTerms: [TermID_1, ...],
                    Clicks: [{ TimePassed: int, SERPID: int, URLID: int }, ...],
-                   URL_DOMAIN: [(URLID_1, DomainID_1), ...] } }
+                   URL_DOMAIN: [(URLID_1, DomainID_1), ...] },
+                  { (second query) }, ...
+                   ]
     """
     s = None
     for line in file:
