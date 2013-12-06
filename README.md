@@ -19,6 +19,9 @@ URL: http://www.kaggle.com/c/yandex-personalized-web-search-challenge
   - Contains our scripts.
 - data
   - Contains all the data, like test and train.  Not committed due to the large size of the files.  Download them directly from Kaggle.
+- notebooks
+  - Contains iPython notebooks.  Run with the following command:
+  - > ipython notebook filename.ipynb
 
 ## About branches / pull requests
 All the code must be reviewed by at least by one other person before being pulled into the master.  Make a branch, write code, test, and send a pull request.  Use short, descriptive names for branches.
