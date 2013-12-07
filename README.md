@@ -17,6 +17,8 @@ URL: http://www.kaggle.com/c/yandex-personalized-web-search-challenge
 ## File structure
 - script
   - Contains our scripts.
+- test
+  - Scripts to test functions.
 - data
   - Contains all the data, like test and train.  Not committed due to the large size of the files.  Download them directly from Kaggle.
 - notebooks
