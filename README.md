@@ -46,6 +46,9 @@ Two ways to look at this problem:
 Our first strategy is based on 2.  (Low-hanging fruits! Yay!)
 https://github.com/yosukesugishita/personalized_search_challenge/wiki/Initial-Model:-Use-multiple-visits
 
+Here is the paper I got inspiration from for this strategy: 
+http://people.csail.mit.edu/teevan/work/publications/papers/wsdm11-pnav.pdf
+
 ## Some notes on the data
 #### The train file is big (16GB when uncompressed)
 
