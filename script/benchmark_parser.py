@@ -14,7 +14,7 @@ count = 0
 while True:
     try:
         # Print at every millionth session
-        if count % (10 ** 7) == 0:
+        if count % (10 ** 6) == 0:
             print "...reading the {0}th session".format(count)
         # next() raises the StopIteration exeption when hitting the end
         session_generator.next()
