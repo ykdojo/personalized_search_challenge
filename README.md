@@ -53,7 +53,8 @@ Two ways to look at this problem:
     - The user is probably more (or less) likely to click the pages they already clicked and liked. => Need to test this.
 
 Our first strategy is based on 2.  (Low-hanging fruits! Yay!)
-https://github.com/yosukesugishita/personalized_search_challenge/wiki/Initial-Model:-Take-advantage-of-multiple-visits
+- https://github.com/yosukesugishita/personalized_search_challenge/wiki/Initial-Model:-Take-advantage-of-multiple-visits
+- Here is the paper that inspired this strategy: http://people.csail.mit.edu/teevan/work/publications/papers/wsdm11-pnav.pdf
 
 ## Some notes on the data
 #### The train file is big (16GB when uncompressed)
