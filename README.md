@@ -1,8 +1,6 @@
 # Attempt on a Kaggle competition, *Personalized Web Search Challenge* (hosted by Yandex)
 URL: http://www.kaggle.com/c/yandex-personalized-web-search-challenge
 
-## Note: There is some code in pull requests.  Somebody, please pull and merge them.
-
 ## Deadline: Friday, January 10, 2014
 
 ## Team Members
