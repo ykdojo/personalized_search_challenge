@@ -18,40 +18,38 @@ def parse_sessions(file):
         { SessionID: int,
           Day: int,
           USERID: int,
-          # This should be a list of queries.
-          Query: [
-                  { TimePassed: int,
+          Queries: [ { TimePassed: int,
                    SERPID: int,
                    QueryID: int,
                    ListOfTerms: [TermID_1, ...],
                    Clicks: [{ TimePassed: int, SERPID: int, URLID: int }, ...],
-                   URL_DOMAIN: [(URLID_1, DomainID_1), ...] },
-                  { (second query) }, ...
-                   ]
+                   URL_DOMAIN: [(URLID_1, DomainID_1), ...] }, ...]
+        }
     """
     s = None
     for line in file:
         sline = line.strip().split('\t')
        
-        if len(sline) == 4 and s is not None:
+        # 'M' for metadata (session)
+        if sline[1] == 'M' and s is not None:
             yield s
        
-        if len(sline) == 4:
-            sid, tor, day, uid = sline
-            s = create_session(sid, day, uid)
-        elif len(sline) == 16:
-            sid, tp, tor, serpid, quid, lot = sline[:6]
-            lou = sline[6:]
-            s['Query'].append(create_query(tp, serpid, quid, lot, lou))
-        elif len(sline) == 5:
-            sid, tp, tor, serpid, urlid = sline
-            s['Query'][-1]['Clicks'].append(create_click(tp, serpid, urlid))
+        if sline[1] == 'M':
+            session_id, record_type, day, user_id = sline
+            s = create_session(session_id, day, user_id)
+        elif sline[2] == 'Q': # 'Q' for Query
+            session_id, time_passed, record_type, serpid, quid, terms = sline[:6]
+            url_list = sline[6:]
+            s['Queries'].append(create_query(time_passed, serpid, quid, terms, url_list))
+        elif sline[2] == 'C': # 'C' for Click
+            session_id, time_passed, record_type, serpid, urlid = sline
+            s['Queries'][-1]['Clicks'].append(create_click(time_passed, serpid, urlid))
  
 def create_session(session_id, day, user_id):
     return { 'SessionID': int(session_id),
               'Day': int(day),
               'USERID': int(user_id),
-              'Query': [] }
+              'Queries': [] }
  
 def create_query(time_passed, serp_id, query_id, list_of_terms, url_list):
     return { 'TimePassed': int(time_passed),
