@@ -133,8 +133,13 @@ def parse(rows):
     for session, rows in itertools.groupby(rows,key=lambda row:row[0]):
         yield Session.from_rows(int(session), list(rows))
 
+# yields each row from each line of the given file
 def generator_of_lists(file_path):
     f = open(file_path)
     for line in f:
         row = line.split()
         yield row
+
+def parse_from_file(file_path):
+    gl = generator_of_lists(file_path)
+    return parse(gl)
