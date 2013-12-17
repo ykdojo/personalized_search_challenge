@@ -40,19 +40,35 @@ class Session(object):
  
     def __repr__(self,):
         return "Session<%i,user=%i>" % (self.sid, self.user)
+
+    def was_skipped(self, query, hit): 
+        # returns true if this url-domain pair has been previously skipped at least once
+        # within this session
+        # previously skipped := result displayed in a previous query but not clicked by the
+        #                       user, with at least one lower ranked result clicked
+        #
+        # assumption: list of queries is in order from oldest to newest (within session)
+        for _query in self.queries:
+            if _query == query:
+                break
+            skipped = _query.skipped_hits()
+            if hit in skipped:
+                return True
+        return False
     
 class ClickEvent:
  
-    __slots__ = ('time', 'serp', 'url', 'dwell_time', )
+    __slots__ = ('time', 'serp', 'url', 'dwell_time',)
     
     def __init__(self, time, serp, url):
         self.time = time
         self.serp = serp
-        self.url = url
+        self.url = url  # This is strictly the url (of the url-domain pair)
+                        # May need domain in the future
         self.dwell_time = 1000
  
     def print_debug(self, indent):
-        print " "*indent, "click", "time=", self.time, "url=", self.url, "dwell_time=", self.dwell_time
+        print " " * indent, "click", "time=", self.time, "url=", self.url, "dwell_time=", self.dwell_time
  
     def satisfaction(self,):
         if 50 <= self.dwell_time < 400:
@@ -63,11 +79,9 @@ class ClickEvent:
  
     @staticmethod
     def parse(fields):
-        return ClickEvent(
-            int(fields[0]),
+        return ClickEvent(int(fields[0]),
             int(fields[2]),
-            int(fields[3])
-        )
+            int(fields[3]))
  
 class QueryEvent(object):
  
@@ -87,7 +101,7 @@ class QueryEvent(object):
         self.terms = terms
         self.hits = hits
         self.clicks = []
-        assert len(self.hits)==10
+        assert len(self.hits) == 10
  
     def get_url_domain(self, qurl):
         for (url, domain) in self.hits:
@@ -96,18 +110,17 @@ class QueryEvent(object):
         return None
     
     def print_debug(self, indent):
-        print " "*indent, "- Query", "time=", self.time, "terms", ",".join(map(str, self.terms)), self.is_test
-        print " "*indent, "  Hits", ",".join(map(str, self.hits))
+        print " " * indent, "- Query", "time=", self.time, "terms", ",".join(map(str, self.terms)), self.is_test
+        print " " * indent, "  Hits", ",".join(map(str, self.hits))
         for click in self.clicks:
-            click.print_debug(indent+2)
+            click.print_debug(indent + 2)
  
     def urls(self,):
         return zip(*self.hits)[0]
  
     @staticmethod
     def parse(fields): 
-        return QueryEvent(
-            int(fields[0]),
+        return QueryEvent(int(fields[0]),
             (fields[1] == "T"),
             int(fields[2]),
             int(fields[3]),
@@ -116,9 +129,7 @@ class QueryEvent(object):
                 tuple(map(int, urldomain.split(",")))
                 for urldomain in fields[5:]
                 if "," in urldomain
-            ]
-        )
- 
+            ]) 
  
     def url_pertinence(self,):
         # returns a dictionary url -> pertinence for the user
@@ -132,6 +143,22 @@ class QueryEvent(object):
         for click in self.clicks:
             rates[click.url] = max(click.satisfaction(), rates[click.url])
         return rates
+
+    def skipped_hits(self,):
+        # returns a subset of url-domain pairs from this query
+        # that were skipped over by user   
+        #
+        # note: some click urls occur more than once for a given query   
+        hits = self.hits
+        skipped = list(hits)
+        last_click = 0
+        for click in self.clicks:
+            for hit in hits:
+                if hit[0] == click.url:                    
+                    last_click = max(hits.index(hit),last_click)
+                    if hit in skipped:
+                        skipped.remove(hit)
+        return skipped[0:last_click-len(self.clicks)]     
 
 
 def parse(rows):
