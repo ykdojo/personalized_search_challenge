@@ -11,16 +11,18 @@ this_file_path = os.path.realpath(__file__) # this file's path
 home_dir = os.path.dirname(os.path.dirname(this_file_path))
 sys.path.insert(0, home_dir + os.sep + "script") # for importing functions
 
-UNIQUE_USERS = 5736333
+UNIQUE_USERS = 5736334
+SAMPLE_PERCENTAGE = 0.01
+SEED = 1
 
-random.seed(1)
-sample_list = random.sample(xrange(UNIQUE_USERS), int(UNIQUE_USERS*0.01))
+random.seed(SEED)
+sample_list = random.sample(xrange(UNIQUE_USERS), int(UNIQUE_USERS*SAMPLE_PERCENTAGE))
 sample_dict = {}
 for user_id in sample_list:
 	sample_dict[user_id] = True;
 
 file = open(home_dir + os.sep + 'data' + os.sep + 'train', 'r')
-sample_file = open( home_dir + os.sep + 'data' + os.sep + 'sample', 'w')
+sample_file = open( home_dir + os.sep + 'data' + os.sep + 'train_sample', 'w')
 
 typed = False;
 
