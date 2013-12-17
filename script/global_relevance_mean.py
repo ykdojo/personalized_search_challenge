@@ -1,5 +1,9 @@
-# This script finds the global relevance mean of all documents for each rank.
+## This script finds the global relevance mean of all documents for each rank.
 # It returns means and plots them against rank (position) 
+#
+## It took ~40 seconds to run this on 1% of the whole train file.
+# 40 seconds * 100 = 4000 seconds ~= 70 minutes.
+# This should take about 70 minutes to run on the whole file.
 
 import matplotlib.pyplot as plt
 import os
