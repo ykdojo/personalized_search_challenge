@@ -2,11 +2,12 @@
 # https://gist.github.com/poulejapon/7909562
 
 import itertools
-from collections import OrderedDict
+from collections import defaultdict, OrderedDict
+from math import log
 
 class Session(object):
  
-    __slots__ = ('sid', 'day', 'day', 'user', 'queries')
+    __slots__ = ('sid', 'day', 'user', 'queries')
  
     def __init__(self, sid, day, user, queries):
         self.sid = sid
@@ -124,6 +125,10 @@ class QueryEvent(object):
         # as described in :
         #   http://www.kaggle.com/c/yandex-personalized-web-search-challenge/details/evaluation
         rates = defaultdict(int)
+        # TODO: test this part, Yosuke wrote this
+        for hit in self.hits:
+            url = hit[0]
+            rates[url] = 0
         for click in self.clicks:
             rates[click.url] = max(click.satisfaction(), rates[click.url])
         return rates

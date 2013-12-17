@@ -1,7 +1,6 @@
-# This script finds the global relevance mean of all documents.
+# This script finds the global relevance mean of all documents for each rank.
 
-# It took 3 seconds to run on 100,000 lines (about 0.1%).  3 * 1000 = 3000 seconds = about 50 minutes?
-# TODO: test on the whole file.
+# Currently, this just finds the global relevance mean.
 
 import os
 import sys
@@ -13,14 +12,14 @@ sys.path.insert(0, home_dir + "/script") # for importing functions
 import session_parser as sp
 
 # For testing
-train_path = home_dir + '/data/train_head'
+# train_path = home_dir + '/data/train_head'
 # For real
-# train_path = home_dir + '/data/train'
+train_path = home_dir + '/data/train'
 
 session_generator = sp.parse_from_file(train_path)
 
 count = 0
-relevance_rates = np.array([], np.int16)
+relevance_rates = list()
 while True:
     try:
         # Print at every millionth session
@@ -30,16 +29,16 @@ while True:
         session = session_generator.next()
 
         # Put relevance rate into the numpy array
-        # Test by printing #TODO
         for query in session.queries:
-            for click in query.clicks:
-                relevance_rates = np.append( relevance_rates, click.satisfaction() )
+            relevance_dict = query.url_pertinence()
+            for document in query.hits:
+                relevance_rates.append(relevance_dict[document[0]])
         count += 1
     except StopIteration as e:
         print "Reached the end of the file."
         break
 
 print "\nSummary on relevance rates:"
-print "mean:", np.mean(relevance_rates)
-print "sd:", np.std(relevance_rates)
+print "mean:", np.mean(np.array(relevance_rates))
+#print "sd:", np.std(relevance_rates)
 print "length:", len(relevance_rates)
