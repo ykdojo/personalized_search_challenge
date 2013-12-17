@@ -20,7 +20,7 @@ for user_id in sample_list:
 	sample_dict[user_id] = True;
 
 file = open(home_dir + os.sep + 'data' + os.sep + 'train', 'r')
-sample_file = open( home_dir + os.sep + 'data' + os.sep + 'sample', 'w')
+sample_file = open( home_dir + os.sep + 'data' + os.sep + 'train_sample', 'w')
 
 typed = False;
 
