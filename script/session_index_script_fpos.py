@@ -1,6 +1,15 @@
-# Creates an index file with 3 columns - session id | start line | end line
+# Creates an index file with 3 columns - session id | start position | end position
 # All columns are delimited by a tab symbol (\t)
 # Each line corresponds to a session
+
+# Example of how to get relevant lines for an entry 
+# f = open('user_index_file2.txt','r')
+# f.seek(file start position, 0) <- ALWAYS RELATIVE TO ZERO!
+# while(f.tell() < file end position):
+# 	print f.readline()
+# This will open the file, go to position required, and while we haven't reached the end position,
+# continue to print out files.
+
 
 import os
 import sys
