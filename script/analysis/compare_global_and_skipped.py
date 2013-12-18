@@ -1,6 +1,7 @@
 ## This script compares the global means and skipped means for each rank position.
 # The numbers will be hard-coded here.
 import numpy as np
+import matplotlib.pyplot as plt
 
 ### The following results are from 1% sample.
 # TODO: replace the following results with real results from 100% train.
@@ -25,3 +26,8 @@ skipped_lengths = np.array([16973,31691,32216,30529,29488,28075,26473,25400,2255
 ratio_skipped = sum(skipped_lengths) / float(num_hits)
 
 print "ratio_skipped:", ratio_skipped
+width = 0.2
+ind = np.arange(1, 11)
+plt.bar(ind, global_means, width, color='r')
+plt.bar(ind+width, skipped_means, width)
+plt.show()
