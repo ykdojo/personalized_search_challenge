@@ -47,6 +47,5 @@ with f as file:
 				sessions = list()
 				sessions.append(split_up[0])
 		last_line = file.tell()
-
-# handle case at eof
-user_index_file.write('\t' + str(file.tell()) + '\t' + ','.join(sessions) +'\n')
+	# handle case at eof
+	user_index_file.write('\t' + str(file.tell()) + '\t' + ','.join(sessions) +'\n')
