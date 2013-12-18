@@ -10,13 +10,15 @@ import os
 import sys
 import numpy as np
 this_file_path = os.path.realpath(__file__) # this file's path
-home_dir = os.path.dirname(os.path.dirname(this_file_path))
+home_dir = os.path.dirname(os.path.dirname(os.path.dirname(this_file_path)))
 
-sys.path.insert(0, home_dir + "/script") # for importing functions
+sys.path.insert(0, home_dir + "/lib") # for importing functions
 import session_parser as sp
 
 # For testing
-train_path = home_dir + '/data/train_head'
+train_path = home_dir + '/data/train_head_10k'
+# train_path = home_dir + '/data/train_sample'
+
 # For real
 # train_path = home_dir + '/data/train'
 
@@ -54,5 +56,5 @@ means = sums / float(num_queries)
 print "\nSummary on relevance rates:"
 print "mean:", means
 print "length:", num_queries
-plt.plot(means)
+plt.bar(range(1, 11), means)
 plt.show()
