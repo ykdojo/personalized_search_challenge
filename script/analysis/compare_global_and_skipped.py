@@ -22,12 +22,23 @@ global_means = np.array([0.65629868,0.21159365,0.13479269,0.09191065,0.06907311,
 num_queries = 638729 # length: 638729
 num_hits = num_queries * 10
 skipped_means = np.array([0.27838331,0.09804045,0.07216911,0.05031282,0.03849023,0.03009795,0.02436445,0.01956693,0.01893318,0.05848492])
+# numbers of skipped urls that have been shown to users
 skipped_lengths = np.array([16973,31691,32216,30529,29488,28075,26473,25400,22553,4343])
 ratio_skipped = sum(skipped_lengths) / float(num_hits)
+
+global_sums = global_means * num_queries
+skipped_sums = skipped_means * skipped_lengths
+
+# numbers of non-skipped urls
+non_skipped_lengths = num_queries - skipped_lengths
+non_skipped_means = (global_sums - skipped_sums) / non_skipped_lengths
+
 
 print "ratio_skipped:", ratio_skipped
 width = 0.2
 ind = np.arange(1, 11)
 plt.bar(ind, global_means, width, color='r')
-plt.bar(ind+width, skipped_means, width)
+plt.bar(ind+width, non_skipped_means, width, color='b')
+plt.bar(ind+2*width, skipped_means, width, color='y')
+# Plot shows global, non-skipped, and then skipped cases.
 plt.show()
