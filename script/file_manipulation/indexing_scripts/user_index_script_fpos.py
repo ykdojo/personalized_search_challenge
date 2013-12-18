@@ -13,11 +13,11 @@
 import os
 import sys
 this_file_path = os.path.realpath(__file__) # this file's path
-home_dir = os.path.dirname(os.path.dirname(this_file_path))
+home_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(this_file_path))))
 sys.path.insert(0, home_dir + os.sep + "script") # for importing functions
 
 f = open(home_dir + os.sep + 'data' + os.sep + 'train', 'r')
-user_index_file = open( home_dir + os.sep + 'data' + os.sep + 'user_index_file2.txt', 'w')
+user_index_file = open( home_dir + os.sep + 'data' + os.sep + 'user_index_file_fpos.txt', 'w')
 
 previous_user = -1
 previous_position = 0

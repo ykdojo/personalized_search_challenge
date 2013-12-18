@@ -8,14 +8,14 @@ import random
 import os
 import sys
 this_file_path = os.path.realpath(__file__) # this file's path
-home_dir = os.path.dirname(os.path.dirname(this_file_path))
+home_dir = os.path.dirname(os.path.dirname(os.path.dirname(this_file_path)))
 sys.path.insert(0, home_dir + os.sep + "script") # for importing functions
 
 UNIQUE_USERS = 5736334
 SAMPLE_PERCENTAGE = 0.01
-SEED = 1
+#SEED = 1
 
-random.seed(SEED)
+#random.seed(SEED)
 sample_list = random.sample(xrange(UNIQUE_USERS), int(UNIQUE_USERS*SAMPLE_PERCENTAGE))
 sample_dict = {}
 for user_id in sample_list:

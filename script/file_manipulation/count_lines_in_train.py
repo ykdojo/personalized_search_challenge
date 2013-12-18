@@ -23,8 +23,7 @@
 
 import os
 this_file_path = os.path.realpath(__file__) # this file's path
-home_dir = os.path.dirname(os.path.dirname(this_file_path))
-data_dir = os.path.join(home_dir, "data")
+home_dir = os.path.dirname(os.path.dirname(os.path.dirname(this_file_path)))
 # Use small data (head) for testing-- use first_n_lines.py
 # train_data = open(os.path.join(data_dir, "train_head"), 'rb')
 train_data = open(os.path.join(data_dir, "train"), 'rb') # this one is the real data

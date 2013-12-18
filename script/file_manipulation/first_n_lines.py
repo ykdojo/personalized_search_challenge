@@ -11,7 +11,7 @@ n = 10**3 # There are about 160 million lines in the train file.
 
 import os
 this_file_path = os.path.realpath(__file__) # this file's path
-home_dir = os.path.dirname(os.path.dirname(this_file_path))
+home_dir = os.path.dirname(os.path.dirname(os.path.dirname(this_file_path)))
 data_dir = os.path.join(home_dir, "data")
 train_data = open(os.path.join(data_dir, "train"), 'rb')
 new_file_path = os.path.join(data_dir, "train_head")
