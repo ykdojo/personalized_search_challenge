@@ -1,3 +1,5 @@
+# We are not using this parser, but leaving it here just for a reference.
+
 ## Parse the train file according to users.
 #
 ## This was originally written by a Kaggler (Miroslaw Horbal, miroslaw@gmail.com) and presented on a discussion board:
