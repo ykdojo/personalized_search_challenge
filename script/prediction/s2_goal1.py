@@ -56,11 +56,12 @@ while True:
                         # use global version
                         pred[url] = global_means[j]   
         # Rank url's according to our predictions
-        pred = sorted(pred.iterkeys(), key=lambda x:pred[x])
+        # reverse=True because this needs to be in descending order
+        pred_sorted = sorted(pred.iterkeys(), key=lambda x:pred[x], reverse=True) 
         # Write predictions to file
-        for val in pred:
+        for val in pred_sorted:
             results.write(str(session.sid)+","+str(val)+"\n")
-             
+
         session_count += 1
     except StopIteration as e:
         print "Reached the end of the file."
