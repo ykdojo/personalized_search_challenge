@@ -19,7 +19,7 @@ import session_parser as sp
 # For testing
 #train_path = home_dir + '/data/train_head_10k'
 #train_path = home_dir + '/data/train_head_million'
-#train_path = home_dir + '/data/train_sample'
+train_path = home_dir + '/data/train_sample_100k'
 
 # For real
 train_path = home_dir + '/data/train'
@@ -63,5 +63,5 @@ means = sums / num_skipped.astype(float)
 
 print "Means: ",means
 
-plt.bar(range(1, 11), means)
-#plt.show()
+plt.bar(range(1,11),means)
+plt.show()

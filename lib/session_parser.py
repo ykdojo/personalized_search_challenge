@@ -56,6 +56,34 @@ class Session(object):
                 return True
         return False
     
+    def num_skipped(self, query, hit):
+        # returns the number of times this document/hit
+        # has been skipped in previous queries in this 
+        # session
+        count = 0
+        for _query in self.queries:
+            if _query == query:
+                break
+            skipped = _query.skipped_hits()
+            if hit in skipped:
+                count += 1
+                #For testing: shows index of this hit
+                #in prior query
+                #indx = _query.hits.index(hit)
+                #print indx
+        #Following code is for testing only
+        """
+            #Shows if this url was clicked previously
+            for click in _query.clicks:
+                if hit[0] == click.url:
+                    print "Clicked!!!"
+        if count > 0:
+            #Index of url in this query
+            print "Final: ", query.hits.index(hit)
+            print "Count: ", count
+        """
+        return count
+    
 class ClickEvent:
  
     __slots__ = ('time', 'serp', 'url', 'dwell_time',)
@@ -154,11 +182,11 @@ class QueryEvent(object):
         last_click = 0
         for click in self.clicks:
             for hit in hits:
-                if hit[0] == click.url:                    
+                if hit[0] == click.url:  
                     last_click = max(hits.index(hit),last_click)
                     if hit in skipped:
                         skipped.remove(hit)
-        return skipped[0:last_click-len(self.clicks)]     
+        return skipped[0:last_click-len(self.clicks)+1]     
 
 
 def parse(rows):
