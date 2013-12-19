@@ -2,6 +2,8 @@
 # with regards to whether a document has been previously skipped. 
 # Note: it doesn't (yet) consider the number of times a document has
 # been skipped.
+#
+# Runs in ~122 seconds for the entire test data.
 
 import os
 import sys
