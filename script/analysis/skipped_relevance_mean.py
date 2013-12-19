@@ -1,5 +1,9 @@
 # This script finds the relevant means for each document position where
-# documents have been skipped within a session. 
+# documents have been skipped within a session.
+
+# Took 52 seconds to run on 0.6% of the train file.
+# -> 52 / 0.6% ~= 9000 = 150 minutes.
+# Should take around 150 minutes to run on the whole train file.
 
 import matplotlib.pyplot as plt
 import os
@@ -13,12 +17,12 @@ sys.path.insert(0, home_dir + "/lib") # for importing functions
 import session_parser as sp
 
 # For testing
-train_path = home_dir + '/data/train_head_10k'
+#train_path = home_dir + '/data/train_head_10k'
 #train_path = home_dir + '/data/train_head_million'
 #train_path = home_dir + '/data/train_sample'
 
 # For real
-# train_path = home_dir + '/data/train'
+train_path = home_dir + '/data/train'
 
 session_generator = sp.parse_from_file(train_path)
 
@@ -60,4 +64,4 @@ means = sums / num_skipped.astype(float)
 print "Means: ",means
 
 plt.bar(range(1, 11), means)
-plt.show()
+#plt.show()
