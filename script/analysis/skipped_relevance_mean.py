@@ -7,9 +7,9 @@ import sys
 import numpy as np
 
 this_file_path = os.path.realpath(__file__) # this file's path
-home_dir = os.path.dirname(os.path.dirname(this_file_path))
+home_dir = os.path.dirname(os.path.dirname(os.path.dirname(this_file_path)))
 
-sys.path.insert(0, home_dir + "/script") # for importing functions
+sys.path.insert(0, home_dir + "/lib") # for importing functions
 import session_parser as sp
 
 # For testing
@@ -26,9 +26,9 @@ session_count = 0
 relevance_rates = list()
 
 # sums for each skipped document (positions 1 to 10)
-sums = np.zeros(10, dtype=float)
+sums = np.zeros(10, dtype=int)
 # array that stores the count for each skipped document (positions 1 to 10)
-num_skipped = np.zeros(10, dtype=float)
+num_skipped = np.zeros(10, dtype=int)
 
 while True:
     try:
@@ -55,9 +55,9 @@ while True:
 print "Sums: ",sums
 print "Lengths: ",num_skipped
 
-means = sums / num_skipped
+means = sums / num_skipped.astype(float)
 
 print "Means: ",means
 
-plt.plot(means)
+plt.bar(range(1,11),means)
 plt.show()
