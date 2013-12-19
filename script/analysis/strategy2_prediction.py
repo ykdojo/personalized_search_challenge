@@ -16,11 +16,13 @@ import session_parser as sp
 test_path = home_dir + '/data/test'
 session_generator = sp.parse_from_file(test_path)
 
+# Read results for skipped and global versions
 skipped_means = pd.read_csv(home_dir + '/data/results/skipped_means.csv',\
     sep=",", skipinitialspace=True, header='infer').skipped_means
 global_means = pd.read_csv(home_dir + '/data/results/global_means.csv',\
     sep=",", skipinitialspace=True, header='infer').global_means
 
+# File for writing our predictions
 results = open(home_dir + '/data/predictions','w')
 results.write("SessionID,URLID\n")
 
@@ -33,6 +35,7 @@ while True:
         # next() raises the StopIteration exeption when hitting the end
         session = session_generator.next()
         
+        # Dictionary to store prediction values
         pred = dict()
         for query in session.queries:  
             if query.is_test: 
@@ -44,8 +47,10 @@ while True:
                         pred[url] = skipped_means[j]
                     else: 
                         # use global version
-                        pred[url] = global_means[j]        
+                        pred[url] = global_means[j]   
+        # Rank url's according to our predictions
         pred = sorted(pred.iterkeys(), key=lambda x:pred[x])
+        # Write predictions to file
         for val in pred:
             results.write(str(session.sid)+","+str(val)+"\n")
              
@@ -54,4 +59,5 @@ while True:
         print "Reached the end of the file."
         break
     
+# Close file
 results.close()
