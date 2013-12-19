@@ -1,0 +1,33 @@
+# This note is just pseudo-code for the issue:
+# Task C1: For each test query that’s applicable for Strategy 2, predict the relevance rate for each document
+
+# go thru test
+# for each session:
+    find the test query (the last visible query):
+        # make: {url1 -> pred_1, url2 -> pred_2, ...}
+        # -> use this to sort: sorted(d.items(), key=lambda x: x[1])
+        -> ask: has it been previously skipped?  If so, make a prediction of the relevance rate.
+                # I belive url_domain looks like (url_id, domain_id)
+                if session.was_skipped(query, url_domain):
+                    # get this information from a csv file
+                    get the skipped version
+                else
+                    get global
+- reorder documents for each test query
+- write the new order in a file
+
+# format:
+SessionID,URLID
+34573630,56916272
+34573630,21297108
+34573630,3581537
+34573630,21294928
+34573630,14223698
+34573630,43630525
+34573630,58195655
+34573630,6937783
+34573630,5737350
+34573630,52489271
+34573633,36604172
+34573633,37384416
+...
