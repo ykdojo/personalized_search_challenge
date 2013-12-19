@@ -1,0 +1,2 @@
+# Ignore .pyc files as they are just Python binaries
+*.pyc
