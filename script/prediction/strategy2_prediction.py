@@ -15,8 +15,9 @@ home_dir = os.path.dirname(os.path.dirname(os.path.dirname(this_file_path)))
 sys.path.insert(0, home_dir + "/lib") # for importing functions
 import session_parser as sp
 
-test_path = home_dir + '/data/test_head' # a small header file for testing
-#test_path = home_dir + '/data/test' # for real
+# test_path = home_dir + '/data/test_head' # a small header file for testing
+# print "WARNING, this script is using a header file, not the real file."
+test_path = home_dir + '/data/test' # for real
 session_generator = sp.parse_from_file(test_path)
 
 # Read results for skipped and global versions
