@@ -8,11 +8,12 @@ import os
 this_file_path = os.path.realpath(__file__) # this file's path
 home_dir = os.path.dirname(os.path.dirname(os.path.dirname(this_file_path)))
 
-global_table = pd.read_csv(home_dir + '/data/results/global_means.csv')
+# Ignore the first three lines in CSV as they are comments
+global_table = pd.read_csv(home_dir + '/data/results/global_means.csv', skiprows=3)
 global_means = global_table['global_means']
 global_lengths = global_table['global_lengths']
 
-skipped_table = pd.read_csv(home_dir + '/data/results/skipped_means.csv')
+skipped_table = pd.read_csv(home_dir + '/data/results/skipped_means.csv', skiprows=3)
 skipped_means = skipped_table['skipped_means']
 skipped_lengths = skipped_table['skipped_lengths']
 
