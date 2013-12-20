@@ -1,5 +1,7 @@
 # Ignore everything in this directory
 /*
-# Except this file and results
-!results/
-!.gitignore
+
+# Except the following
+!.gitignore # this file
+!prediction/ # submission/prediction files
+!results/ # analysis results

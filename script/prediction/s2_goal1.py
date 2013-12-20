@@ -15,17 +15,22 @@ home_dir = os.path.dirname(os.path.dirname(os.path.dirname(this_file_path)))
 sys.path.insert(0, home_dir + "/lib") # for importing functions
 import session_parser as sp
 
-test_path = home_dir + '/data/test'
+# test_path = home_dir + '/data/test_head' # a small header file for testing
+# print "WARNING, this script is using a header file, not the real file."
+test_path = home_dir + '/data/test' # for real
 session_generator = sp.parse_from_file(test_path)
 
 # Read results for skipped and global versions
+# Ignore the first 3 lines in CSV as they are comments.
 skipped_means = pd.read_csv(home_dir + '/data/results/skipped_means.csv',\
-    sep=",", skipinitialspace=True, header='infer').skipped_means
+    sep=",", skipinitialspace=True, header='infer', skiprows=3).skipped_means
 global_means = pd.read_csv(home_dir + '/data/results/global_means.csv',\
-    sep=",", skipinitialspace=True, header='infer').global_means
+    sep=",", skipinitialspace=True, header='infer', skiprows=3).global_means
 
 # File for writing our predictions
-results = open(home_dir + '/data/predictions','w')
+# Strategy 2 - Goal 1, with a bug.  We fixed a bug, so we should try running this
+#  with the fixed algorithm again.
+results = open(home_dir + '/data/prediction/s2_goal1_with_bug','w')
 results.write("SessionID,URLID\n")
 
 session_count = 0
@@ -51,11 +56,12 @@ while True:
                         # use global version
                         pred[url] = global_means[j]   
         # Rank url's according to our predictions
-        pred = sorted(pred.iterkeys(), key=lambda x:pred[x])
+        # reverse=True because this needs to be in descending order
+        pred_sorted = sorted(pred.iterkeys(), key=lambda x:pred[x], reverse=True) 
         # Write predictions to file
-        for val in pred:
+        for val in pred_sorted:
             results.write(str(session.sid)+","+str(val)+"\n")
-             
+
         session_count += 1
     except StopIteration as e:
         print "Reached the end of the file."
