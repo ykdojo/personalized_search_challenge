@@ -43,11 +43,8 @@ while True:
                     url_domain = query.hits[j]
                     url = url_domain[0]
                     # Get the number of times this document was skipped
-                    times_skipped = session.num_skipped(query, url_domain)
-                    if times_skipped > 2: 
-                        pred[url] = 0.0 #THIS PART IS TENTATIVE
-                    else:
-                        pred[url] = ts_means[j][times_skipped]  
+                    times_skipped = min(session.num_skipped(query, url_domain),3)
+                    pred[url] = ts_means[j][times_skipped]  
         # Rank url's according to our predictions
         # reverse=True because this needs to be in descending order
         pred_sorted = sorted(pred.iterkeys(), key=lambda x:pred[x], reverse=True) 
