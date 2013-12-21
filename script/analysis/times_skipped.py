@@ -64,7 +64,7 @@ means = []
 for i in range(10):
     means.append((counts[i]) / (lengths[i]).astype(float))     
     
-output = open(home_dir + '/data/results/times_skipped_test2.csv','w')
+output = open(home_dir + '/data/results/times_skipped_test.csv','w')
 
 #output.write("#Note: NaN and zero are not the same\n")
 #output.write("#NaN = no such value exists\n")
