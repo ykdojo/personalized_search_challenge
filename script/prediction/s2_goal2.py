@@ -20,7 +20,7 @@ with open(home_dir + '/data/results/times_skipped.csv','r') as _input:
     for line in _input:
         line = line.strip()
         line = line.split(",")
-        ts_means.append(line[0:len(line)-1]) # removes trailing comma
+        ts_means.append(line) # removes trailing comma
 
 # File for writing our predictions
 results = open(home_dir + '/data/prediction/s2_goal2.csv','w')
@@ -44,8 +44,8 @@ while True:
                     url = url_domain[0]
                     # Get the number of times this document was skipped
                     times_skipped = session.num_skipped(query, url_domain)
-                    if times_skipped > 2:
-                        pred[url] = 0.0
+                    if times_skipped > 2: 
+                        pred[url] = 0.0 #THIS PART IS TENTATIVE
                     else:
                         pred[url] = ts_means[j][times_skipped]  
         # Rank url's according to our predictions

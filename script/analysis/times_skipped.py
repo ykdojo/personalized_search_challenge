@@ -18,21 +18,20 @@ import session_parser as sp
 # For testing
 #train_path = home_dir + '/data/train_head_10k'
 #train_path = home_dir + '/data/train_head_million'
-#train_path = home_dir + '/data/train_sample_million'
+train_path = home_dir + '/data/train_sample_10k'
 
 # For real
-train_path = home_dir + '/data/train'
+#train_path = home_dir + '/data/train'
 session_generator = sp.parse_from_file(train_path)
 
 session_count = 0
 
-# This value expands as the number of skips increases as we go through the data.
-# (Since we do not know ahead of time the max #skips)
-limit = [4]*10
+# Skips greater than or equal to this value will be aggregated
+limit = 3
 # 2D array stores the sums for each position for each 'number of skips'
-counts = [np.zeros(limit[0] + 1,dtype=int) for i in range(10)]
+counts = [np.zeros(limit+1,dtype=int) for i in range(10)]
 # 2D array stores the corresponding lengths
-lengths = [np.zeros(limit[0] + 1,dtype=int) for i in range(10)]
+lengths = [np.zeros(limit+1,dtype=int) for i in range(10)]
 
 while True:
     try:
@@ -50,15 +49,12 @@ while True:
                 url_domain = query.hits[j]
                 # Get number of times this document was previously skipped within session
                 times_skipped = session.num_skipped(query, url_domain)
-                if times_skipped > limit[j]: #Check that our array is big enough
-                    # enlarge arrays
-                    counts[j] = np.append(counts[j],np.zeros(times_skipped - limit[j],dtype=int))
-                    lengths[j] = np.append(lengths[j],np.zeros(times_skipped - limit[j],dtype=int))
-                    limit[j] = times_skipped
-                # add corresponding relevance rate to sum
-                counts[j][times_skipped] += relevance_dict[url_domain[0]]
-                # increment length
-                lengths[j][times_skipped] += 1
+                if times_skipped >= limit: #if time_skipped > 2
+                    counts[j][limit] += relevance_dict[url_domain[0]]
+                    lengths[j][limit] += 1
+                else: 
+                    counts[j][times_skipped] += relevance_dict[url_domain[0]]
+                    lengths[j][times_skipped] += 1
         session_count += 1
     except StopIteration as e:
         print "Reached the end of the file."
@@ -68,16 +64,17 @@ means = []
 for i in range(10):
     means.append((counts[i]) / (lengths[i]).astype(float))     
     
-output = open(home_dir + '/data/results/times_skipped.csv','w')
+output = open(home_dir + '/data/results/times_skipped_test2.csv','w')
 
 #output.write("#Note: NaN and zero are not the same\n")
 #output.write("#NaN = no such value exists\n")
 #output.write("#Zero = Relevance mean is zero\n\n")
 #output.write("MEANS:\n")
 for i in range(10):
-    for j in range(len(means[i])):
-        output.write(str(means[i][j]))
+    output.write(str(means[i][0]))
+    for j in range(1,len(means[i])):
         output.write(",")
+        output.write(str(means[i][j]))        
     output.write("\n")
 """
 output.write("\nLENGTHS:\n")
