@@ -1,12 +1,21 @@
-# This is the script that creates a new file "train_sample_p_percent_seed_s"
+## This is the script that creates a new file "train_sample_p_percent_seed_s"
 # containing a random p% sample of users from the original train data with the seed s.
+#
+## This script takes two arguments.
+# > sample_script.py percentage seed
+# for now, percentage and seed must be an integer.
 #
 # Takes around 3 minutes to run this on the whole train file.
 # Tested by running the script and confirming the output visually.
+import sys
+import random
+import os
 
-# TODO: Take the following variables as args
-SAMPLE_PERCENTAGE = 1
-SEED = 1
+# argv[0] is the file name, followed by real arguments
+SAMPLE_PERCENTAGE = int(sys.argv[1])
+SEED = int(sys.argv[2])
+
+
 # Not sure if this file name would work with a decimal.
 #original_filename = 'train_head_10k' # test with a header file
 original_filename = 'train' # for real
@@ -14,8 +23,6 @@ output_filename = original_filename + '_sample_' + str(SAMPLE_PERCENTAGE) + '_pe
 
 sample_ratio = SAMPLE_PERCENTAGE * 0.01 # convert from percentage to ratio
 
-import random
-import os
 this_file_path = os.path.realpath(__file__) # this file's path
 home_dir = os.path.dirname(os.path.dirname(os.path.dirname(this_file_path)))
 
