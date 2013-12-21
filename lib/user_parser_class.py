@@ -2,6 +2,8 @@ from session_parser import Session
 import itertools
 
 class IndexLoaders(object):
+# A class mostly for static access and storage of the index files.
+# WARNING : The user index will consume roughly 3GB of memory if provided as an argument.
 
 	user_index = dict()
 	session_index = dict()
@@ -10,31 +12,38 @@ class IndexLoaders(object):
 	# into the global hash user_index_file
 	@staticmethod
 	def load_user_index_file(user_index_file):
-		print 'Starting to load user index hash...'
-		with open(user_index_file,'r') as f:
-			for line in f:
-				s = line.split('\t')
-				IndexLoaders.user_index[s[0]] = list() # uid
-				IndexLoaders.user_index[s[0]].append(int(s[1])) # start position
-				IndexLoaders.user_index[s[0]].append(int(s[2])) # end position
-				IndexLoaders.user_index[s[0]].append([int(x) for x in s[3].rstrip().split(',')]) # sessions
-		print 'Completed loading of user index hash!'
+		if len(IndexLoaders.user_index) == 0:
+			print 'Starting to load user index hash...'
+			with open(user_index_file,'r') as f:
+				for line in f:
+					s = line.split('\t')
+					IndexLoaders.user_index[s[0]] = list() # uid
+					IndexLoaders.user_index[s[0]].append(int(s[1])) # start position
+					IndexLoaders.user_index[s[0]].append(int(s[2])) # end position
+					IndexLoaders.user_index[s[0]].append([int(x) for x in s[3].rstrip().split(',')]) # sessions
+			print 'Completed loading of user index hash!'
+		else:
+			print 'User index file appears to already have entries loaded.'
 
 	# loads the index file generated for sids/start/end positions
 	@staticmethod
 	def load_session_index_file(session_index_file):
 		print 'Starting to load session index hash...'
-		with open(session_index_file,'r',) as f:
-			for line in f:
-				s = line.split('\t')
-				IndexLoaders.session_index[s[0]] = list() # sid
-				IndexLoaders.session_index[s[0]].append(int(s[1])) # start
-				IndexLoaders.session_index[s[0]].append(int(s[2])) # end
-		print 'Completed loading of session index hash!'
+		if len(IndexLoaders.session_index) == 0:
+			with open(session_index_file,'r',) as f:
+				for line in f:
+					s = line.split('\t')
+					IndexLoaders.session_index[s[0]] = list() # sid
+					IndexLoaders.session_index[s[0]].append(int(s[1])) # start
+					IndexLoaders.session_index[s[0]].append(int(s[2])) # end
+			print 'Completed loading of session index hash!'
+		else:
+			print 'Session index appears to already have entries!'
 
 class User(object):
 	# a representation of a User class, see test_user_parser for usage
 
+	# constructor
 	def __init__(self, uid, sessions):
 		self.uid = uid
 		self.sessions = sessions
@@ -59,17 +68,17 @@ class User(object):
 					rows.append(f.readline().split('\t'))
 		
 			ret_sessions.append(Session.from_rows(session, rows))
-		t = User(uid,ret_sessions)
-		#print t
-		#print t.sessions
+		# DEBUG  t = User(uid,ret_sessions)
+		# DEBUG print t
+		# DEBUG print t.sessions
 		return User(uid, ret_sessions)
 		
 	@staticmethod
 	def parse(rows,training_file):
 		for user, rows in itertools.groupby(rows,key=lambda row:row[3]):
-			User.from_rows(user, [x[0] for x in rows],training_file)
+			yield User.from_rows(user, [x[0] for x in rows],training_file)
 
-	# yields each from each line of the given file
+	# yields each from each line of the given file if it is only a METADATA line
 	@staticmethod
 	def generator_of_lists(file_path):
 		f = open(file_path)
@@ -78,12 +87,12 @@ class User(object):
 			if row[1] == 'M':
 				yield row
 	
-	# input is file_path -> output is session generator
 	@staticmethod
 	def parse_from_file(training_file):
 		gl = User.generator_of_lists(training_file)
 		return User.parse(gl,training_file)
-
+	
+	# representation of a User class
 	def __repr__(self,):
 		return "User %s" % (self.uid)
 
