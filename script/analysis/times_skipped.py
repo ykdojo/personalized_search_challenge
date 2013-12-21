@@ -79,10 +79,12 @@ for i in range(10):
         output.write(str(means[i][j]))
         output.write(",")
     output.write("\n")
-    
+"""
 output.write("\nLENGTHS:\n")
 for i in range(10):
     for j in range(len(means[i])):
         output.write(str(lengths[i][j]))
         output.write(",")
     output.write("\n")
+"""
+output.close()
