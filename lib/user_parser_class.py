@@ -33,12 +33,7 @@ class IndexLoaders(object):
 		print 'Completed loading of session index hash!'
 
 class User(object):
-	# need to load the dictionary of the user_index file and pass as a reference
-	# to this function to access the training file
-	# the loaded dictionary should be in the following format 
-	# user_index_dict{ int : { 'start' : int, 'end' : int, 'sessions', string } }
-	# where the first int is the uid
-	# and sessions is a string delimited by commas
+	# a representation of a User class, see test_user_parser for usage
 
 	def __init__(self, uid, sessions):
 		self.uid = uid
