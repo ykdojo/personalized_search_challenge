@@ -26,8 +26,12 @@ session_generator = sp.parse_from_file(train_path)
 
 session_count = 0
 
+# This value expands as the number of skips increases as we go through the data.
+# (Since we do not know ahead of time the max #skips)
 limit = [4]*10
+# 2D array stores the sums for each position for each 'number of skips'
 counts = [np.zeros(limit[0] + 1,dtype=int) for i in range(10)]
+# 2D array stores the corresponding lengths
 lengths = [np.zeros(limit[0] + 1,dtype=int) for i in range(10)]
 
 while True:
@@ -44,12 +48,16 @@ while True:
             relevance_dict = query.url_pertinence()
             for j in range(0,10):
                 url_domain = query.hits[j]
+                # Get number of times this document was previously skipped within session
                 times_skipped = session.num_skipped(query, url_domain)
-                if times_skipped > limit[j]:
+                if times_skipped > limit[j]: #Check that our array is big enough
+                    # enlarge arrays
                     counts[j] = np.append(counts[j],np.zeros(times_skipped - limit[j],dtype=int))
                     lengths[j] = np.append(lengths[j],np.zeros(times_skipped - limit[j],dtype=int))
                     limit[j] = times_skipped
+                # add corresponding relevance rate to sum
                 counts[j][times_skipped] += relevance_dict[url_domain[0]]
+                # increment length
                 lengths[j][times_skipped] += 1
         session_count += 1
     except StopIteration as e:
@@ -60,7 +68,7 @@ means = []
 for i in range(10):
     means.append((counts[i]) / (lengths[i]).astype(float))     
     
-output = open(home_dir + '/data/results/times_skipped.tsv','w')
+output = open(home_dir + '/data/results/times_skipped.csv','w')
 
 output.write("#Note: NaN and zero are not the same\n")
 output.write("#NaN = no such value exists\n")
@@ -69,12 +77,12 @@ output.write("MEANS:\n")
 for i in range(10):
     for j in range(len(means[i])):
         output.write(str(means[i][j]))
-        output.write("\t")
+        output.write(",")
     output.write("\n")
     
 output.write("\nLENGTHS:\n")
 for i in range(10):
     for j in range(len(means[i])):
         output.write(str(lengths[i][j]))
-        output.write("\t")
+        output.write(",")
     output.write("\n")
