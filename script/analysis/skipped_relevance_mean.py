@@ -1,5 +1,7 @@
-# This script finds the relevant means for each document position where
+## This script finds the relevant means for each document position where
 # documents have been skipped within a session.
+#
+## At the same time, it will find the non-skipped case (global case)
 
 # Took 52 seconds to run on 0.6% of the train file.
 # -> 52 / 0.6% ~= 9000 = 150 minutes.
@@ -30,7 +32,7 @@ session_count = 0
 relevance_rates = list()
 
 # sums for each skipped document (positions 1 to 10)
-sums = np.zeros(10, dtype=int)
+sums_skipped = np.zeros(10, dtype=int)
 # array that stores the count for each skipped document (positions 1 to 10)
 num_skipped = np.zeros(10, dtype=int)
 
@@ -49,17 +51,17 @@ while True:
             for j in range(0,10):
                 url_domain = query.hits[j]
                 if session.was_skipped(query, url_domain): 
-                    sums[j] += relevance_dict[url_domain[0]]
+                    sums_skipped[j] += relevance_dict[url_domain[0]]
                     num_skipped[j] += 1
         session_count += 1
     except StopIteration as e:
         print "Reached the end of the file."
         break
 
-print "Sums: ",sums
+print "sums_skipped: ",sums_skipped
 print "Lengths: ",num_skipped
 
-means = sums / num_skipped.astype(float)
+means_skipped = sums_skipped / num_skipped.astype(float)
 
 print "Means: ",means
 

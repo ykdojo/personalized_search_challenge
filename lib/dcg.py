@@ -22,4 +22,9 @@ def iDCG(relevances):
 
 # normalized NDCG
 def nDCG(relevances):
-	return DCG(relevances) / iDCG(relevances)
+    # if iDCG is 0, assume the nDCG is considered 1.
+    # TODO: Not sure if this is the case, so we should check just in case.
+    if iDCG(relevances) == 0:
+        return 1
+    else:
+        return DCG(relevances) / iDCG(relevances)

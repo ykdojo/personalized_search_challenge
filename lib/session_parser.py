@@ -2,6 +2,7 @@
 # https://gist.github.com/poulejapon/7909562
 
 import itertools
+import dcg
 from collections import defaultdict, OrderedDict
 from math import log
 
@@ -137,6 +138,18 @@ class QueryEvent(object):
                 return domain
         return None
     
+    # TODO: test the following 2 functions, Yosuke wrote them
+    # compute the ndcg given the predicted ranking of urls (in list)
+    def ndcg_from_pred(self, pred):
+        # produce a list of relevance rates that correspond to pred
+        rel_dict = self.url_pertinence()
+        rels = [rel_dict[p] for p in pred]
+        return dcg.nDCG(rels)
+
+    # compute the baseline ndcg
+    def ndcg_baseline(self):
+        return self.ndcg_from_pred(self.urls()) # put the original order as the prediction.
+
     def print_debug(self, indent):
         print " " * indent, "- Query", "time=", self.time, "terms", ",".join(map(str, self.terms)), self.is_test
         print " " * indent, "  Hits", ",".join(map(str, self.hits))

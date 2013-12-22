@@ -1,6 +1,6 @@
 # The first three lines are comments:
-#  This comes from the whole train file, but a bug was found. 
-#  Need to rerun the algorithm and produce a new result.
+#  This comes from the whole train file.
+#  
 global_means,global_lengths
 0.65629868,65172853
 0.21159365,65172853

@@ -1,14 +1,14 @@
 # The first three lines are comments:
-#  This comes from the whole train file, but a bug was found. 
-#  Need to rerun the algorithm and produce a new result.
-skipped_means,skipped_lengths
-0.27965296,1730527
-0.10072134,3247554
-0.07105565,3309617
-0.0497917,3151650
-0.03907419,3056928
-0.02980819,2900008
-0.0229401,2717468
-0.01861541,2599030
-0.01664182,2333279
-0.0524007,446578
+#  Punit produced this file, but not sure if it
+#  comes from the whole train file or not.
+skipped_means, skipped_lengths
+0.22300245,6283940
+0.10933261,1946766
+0.08235525,1586007
+0.06215775,1253456
+0.05339835,1069284
+0.04576182,889497
+0.03883762,727851
+0.03566959,614529
+0.03712255,476449
+0.06519602,226839
