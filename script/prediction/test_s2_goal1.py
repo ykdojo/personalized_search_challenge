@@ -1,5 +1,11 @@
 ## This script tests s2_goal1.py locally.
-TEST_FILE_NAME = 'train_sample_1_percent_seed_2'
+# TODO 1: perform t-test or confidence interval analysis here
+# TODO 2: ignore the last jump in the skipped_means and see what happens 
+# TODO 3: use out-of-sample, instead of in-sample for testing
+# TODO 4: in the analysis script, plot the number of occurences for each relevance rate for each rank, instead of getting the mean for everything.
+
+TEST_FILE_NAME = 'train_sample_0.1_percent_seed_2' # smaller file for testing
+#TEST_FILE_NAME = 'train_sample_1_percent_seed_2' # bigger file
 
 import os
 import sys
@@ -54,8 +60,9 @@ while True:
             pred_sorted = sorted(pred.iterkeys(), key=lambda x:pred[x], reverse=True) 
             sum_ndcg_from_pred += query.ndcg_from_pred(pred_sorted)
             sum_ndcg_baseline += query.ndcg_baseline()
+
             # count the number of ranks that have been changed
-            if list(query.urls()) == pred_sorted:
+            if list(query.urls()) != pred_sorted:
                 count_changed += 1
 
         session_count += 1

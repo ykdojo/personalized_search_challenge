@@ -3,7 +3,7 @@
 #
 ## This script takes two arguments.
 # > sample_script.py percentage seed
-# for now, percentage and seed must be an integer.
+# for now, seed must be an integer.
 #
 # Takes around 3 minutes to run this on the whole train file.
 # Tested by running the script and confirming the output visually.
@@ -12,7 +12,7 @@ import random
 import os
 
 # argv[0] is the file name, followed by real arguments
-SAMPLE_PERCENTAGE = int(sys.argv[1])
+SAMPLE_PERCENTAGE = float(sys.argv[1])
 SEED = int(sys.argv[2])
 
 
