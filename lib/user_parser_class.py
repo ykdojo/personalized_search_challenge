@@ -1,5 +1,5 @@
 from session_parser import Session
-import itertools
+import itertools, operator
 
 class IndexLoaders(object):
 # A class mostly for static access and storage of the index files.
@@ -50,7 +50,7 @@ class User(object):
 
 	@staticmethod
 	# take a uid, construct a user object and associated session objects
-	def from_rows(uid, sessions, training_file):
+	def from_non_sequential_rows(uid, sessions, training_file):
 		# uid is the user id
 		# sessions are a list of ints of session numbers
 		# get the rows associated with a session and toss it off to the Session parser
@@ -68,30 +68,71 @@ class User(object):
 					rows.append(f.readline().split('\t'))
 		
 			ret_sessions.append(Session.from_rows(session, rows))
-		# DEBUG  t = User(uid,ret_sessions)
-		# DEBUG print t
-		# DEBUG print t.sessions
+		t = User(uid,ret_sessions)
+		print t.uid
+		print t.sessions
 		return User(uid, ret_sessions)
-		
+
 	@staticmethod
-	def parse(rows,training_file):
-		for user, rows in itertools.groupby(rows,key=lambda row:row[3]):
-			yield User.from_rows(user, [x[0] for x in rows],training_file)
+	def parse_user_sessions(rows):
+		for sid, row in itertools.groupby(rows, key=lambda row:row[0][0]):
+			# sid = the first session that the parser runs across for the user
+			# a bunch of sessions are all bundled into the generator rows
+
+			row = list(row) # convert generator to values [[[ ]]]
+			sid = int(sid)
+			
+			# print sid, row , '\n'
+			# gives rows where all sessions belong to the same user within this grouping
+			
+			meta = row[0][0]
+			assert meta[1] == "M"
+			uid = int(meta[3])
+
+			current_sid = sid
+			for entry in row:
+				session_rows = list()
+				session_objects = list()
+				# need to create separate session objects when the session number changes
+				for line in entry:
+					if int(line[0]) != current_sid:
+						# create session info for lines saved thus far
+						s = Session.from_rows(current_sid, session_rows)
+						session_objects.append(s)
+						# update current session tracking
+						current_sid = int(line[0])
+						session_rows = []
+					session_rows.append(line)
+				# deal with off by one case at the very end
+				s = Session.from_rows(current_sid, session_rows)
+				session_objects.append(s)
+				current_sid = int(line[0])
+
+			# t= User(uid, session_objects)
+			# print t.uid, t.sessions
+			return User(uid, session_objects)
 
 	# yields each from each line of the given file if it is only a METADATA line
+	# captures lines associated with a user and all their sessions
 	@staticmethod
-	def generator_of_lists(file_path):
+	def generator_of_seqential_lists(file_path):
 		f = open(file_path)
+		prev_user = 0
+		rows = list()
 		for line in f:
-			row = line.split()
+			row = line.rstrip().split('\t')
 			if row[1] == 'M':
-				yield row
-	
+				if prev_user != int(row[3]):
+					prev_user = int(row[3])
+					yield rows
+					rows = [] 
+			rows.append(row)
+
 	@staticmethod
 	def parse_from_file(training_file):
-		gl = User.generator_of_lists(training_file)
-		return User.parse(gl,training_file)
-	
+		gl =  User.generator_of_seqential_lists(training_file)
+		return User.parse_user_sessions(gl)
+		
 	# representation of a User class
 	def __repr__(self,):
 		return "User %s" % (self.uid)
