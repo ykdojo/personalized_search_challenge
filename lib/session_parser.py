@@ -39,7 +39,7 @@ class Session(object):
         return Session(session, day, user, queries.values())
  
     def __repr__(self,):
-        return "Session<%i,user=%i>" % (self.sid, self.user)
+        return "Session<%s,day=%i,user=%i,queries=%s>" % (self.sid, self.day, self.user, self.queries)
 
     def was_skipped(self, query, hit): 
         # returns true if this url-domain pair has been previously skipped at least once
