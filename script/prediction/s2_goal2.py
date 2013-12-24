@@ -16,7 +16,7 @@ session_generator = sp.parse_from_file(test_path)
 # Read results for times-skipped relevance means.
 # Ignore the first 5 lines in CSV as they are comments.
 ts_means = []
-with open(home_dir + '/data/results/times_skipped.csv','r') as _input:
+with open(home_dir + '/data/results/times_skipped_new.csv','r') as _input:
     for line in _input:
         line = line.strip()
         line = line.split(",")

@@ -18,10 +18,10 @@ import session_parser as sp
 # For testing
 #train_path = home_dir + '/data/train_head_10k'
 #train_path = home_dir + '/data/train_head_million'
-train_path = home_dir + '/data/train_sample_10k'
+#train_path = home_dir + '/data/train_sample_10k'
 
 # For real
-#train_path = home_dir + '/data/train'
+train_path = home_dir + '/data/train'
 session_generator = sp.parse_from_file(train_path)
 
 session_count = 0
@@ -64,7 +64,7 @@ means = []
 for i in range(10):
     means.append((counts[i]) / (lengths[i]).astype(float))     
     
-output = open(home_dir + '/data/results/times_skipped_test.csv','w')
+output = open(home_dir + '/data/results/times_skipped_new.csv','w')
 
 #output.write("#Note: NaN and zero are not the same\n")
 #output.write("#NaN = no such value exists\n")
