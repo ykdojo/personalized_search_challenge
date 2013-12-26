@@ -5,6 +5,6 @@ import session_parser
 #IndexLoaders.load_user_index_file('/home/michael/workspace/ML/personalized_search_challenge/data/user_index_small.txt')
 #IndexLoaders.load_session_index_file('/home/michael/workspace/ML/personalized_search_challenge/data/session_index_small.txt')
 
+# TODO: This should be written so that it works on anybody's computer
 User.parse_from_file('/home/michael/workspace/ML/personalized_search_challenge/data/small.train')
-
 

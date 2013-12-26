@@ -40,13 +40,31 @@ class IndexLoaders(object):
 		else:
 			print 'Session index appears to already have entries!'
 
+# a representation of a User class, see test_user_parser for usage
 class User(object):
-	# a representation of a User class, see test_user_parser for usage
+    __slots__ = ('uid', 'sessions')
 
 	# constructor
 	def __init__(self, uid, sessions):
 		self.uid = uid
 		self.sessions = sessions
+
+    ## <Pseudo-code>
+    ## returns the dictionary of query-url pair that are rated 2.
+    ##   the form is: {(query_1, url_4): session_1, session_3, session_4, (query_2, url_3): session1}
+    ## the sessions are the ones in which each query-url pair has been rated 2.
+    #def get_queries_rated_2(self):
+    #    # if we already have this in the object, return it.
+    #    if not queries_rated_2 == None:
+    #        return queries_rated_2
+    #    # otherwise, compute it
+    #    else:
+    #        # find and set queries_rated_2
+    ## returns the number of times the user has liked the same query-document pair
+    ## in past sessions
+    #def num_times_rated_2(self, query, url):
+    #    # use get_queries_rated_2 for this
+    ### (User class end)
 
 	@staticmethod
 	# take a uid, construct a user object and associated session objects
@@ -136,5 +154,3 @@ class User(object):
 	# representation of a User class
 	def __repr__(self,):
 		return "User %s" % (self.uid)
-
-
