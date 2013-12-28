@@ -163,13 +163,16 @@ class QueryEvent(object):
 
 def parse(rows):
     for session, rows in itertools.groupby(rows,key=lambda row:row[0]):
+        #print "In Parse Function now"
         yield Session.from_rows(int(session), list(rows))
 
 # yields each row from each line of the given file
 def generator_of_lists(file_path):
     f = open(file_path)
     for line in f:
+        #print line
         row = line.split()
+        #print row
         yield row
 
 def parse_from_file(file_path):
