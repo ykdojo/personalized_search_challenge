@@ -108,9 +108,7 @@ class User(object):
 				session_objects.append(s)
 				current_sid = int(line[0])
 
-			# t= User(uid, session_objects)
-			# print t.uid, t.sessions
-			return User(uid, session_objects)
+			yield User(uid, session_objects)
 
 	# yields each from each line of the given file if it is only a METADATA line
 	# captures lines associated with a user and all their sessions
@@ -127,6 +125,7 @@ class User(object):
 					yield rows
 					rows = [] 
 			rows.append(row)
+		yield rows
 
 	@staticmethod
 	def parse_from_file(training_file):
